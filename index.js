@@ -12,7 +12,7 @@ require("dotenv").config();
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
-app.use(cors);
+// app.use(cors);
 
 const Port=process.env.PORT||4000; 
 const db_username = process.env.DB_USERNAME;
@@ -23,7 +23,7 @@ const connectDB = async () => {
     try {
     const url = `mongodb+srv://${db_username}:${db_password}@todolist.izk0v8w.mongodb.net/${db_name}?retryWrites=true&w=majority`;
     const conn = await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
-      console.log(`MongoDB Connected: ${conn.connection.host}`);
+      console.log(`MongoDB Connected`);
     } catch (error) {
       console.log(error);
       process.exit(1);
@@ -33,42 +33,36 @@ const connectDB = async () => {
 
 const shop_data = JSON.parse(fs.readFileSync("./Data/Shop.json", { encoding: "utf-8" }));
 
-const db = mongoose.connection;
-db.on('error', console.error.bind(console, 'MongoDB connection error:'));
-db.once('open', async function () {
-    console.log('MongoDB connected!');
-});
-
 app.get("/", function (req, res) {
     res.status(201).json({ message: "Welcome to DocHub" })
 });
 
-// app.get("/Autocomplete",async function(req,res){
-//     const Data = req.query.MediName;
-//     let Final_data=[]
-//     let Medi_data=await Medicine.find({ BrandName1: {$regex:Data, $options: 'i'  }})
-//     if(Medi_data!=0){
-//         for(var i=0;i<Medi_data.length;i++){
-//                 Final_data.push(Medi_data[i]["BrandName1"]);
+app.get("/Autocomplete",async function(req,res){
+    const Data = req.query.MediName;
+    let Final_data=[]
+    let Medi_data=await Medicine.find({ BrandName1: {$regex:Data, $options: 'i'  }})
+    if(Medi_data!=0){
+        for(var i=0;i<Medi_data.length;i++){
+                Final_data.push(Medi_data[i]["BrandName1"]);
 
-//         }
-//     }
-//     Medi_data=await Medicine.find({ BrandName2: {$regex:Data, $options: 'i'  }})
-//     if(Medi_data!=0){
-//         for(var i=0;i<Medi_data.length;i++){
-//                 Final_data.push(Medi_data[i]["BrandName2"]);
-//         }
-//     }
-//     Medi_data=await Medicine.find({ BrandName3: {$regex:Data, $options: 'i'  }})
-//     if(Medi_data!=0){
-//         for(var i=0;i<Medi_data.length;i++){
-//                 Final_data.push(Medi_data[i]["BrandName3"]);
+        }
+    }
+    Medi_data=await Medicine.find({ BrandName2: {$regex:Data, $options: 'i'  }})
+    if(Medi_data!=0){
+        for(var i=0;i<Medi_data.length;i++){
+                Final_data.push(Medi_data[i]["BrandName2"]);
+        }
+    }
+    Medi_data=await Medicine.find({ BrandName3: {$regex:Data, $options: 'i'  }})
+    if(Medi_data!=0){
+        for(var i=0;i<Medi_data.length;i++){
+                Final_data.push(Medi_data[i]["BrandName3"]);
 
-//         }
-//     }
+        }
+    }
     
-//     res.send(Final_data);
-// })
+    res.send(Final_data);
+})
 
 app.get("/Get_Medicine", async function (req, res) {
     const Data = req.query.MediName;
@@ -123,3 +117,4 @@ connectDB().then(() => {
     app.listen(Port, () => { console.log(`Server is running at ${Port}....`) });
 
 })
+// app.listen(Port, () => { console.log(`Server is running at ${Port}....`) });
