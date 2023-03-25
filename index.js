@@ -12,6 +12,7 @@ require("dotenv").config();
 const app = express();
 
 app.use(express.urlencoded({ extended: true }));
+app.use(cors);
 
 const Port=process.env.PORT||4000; 
 const db_username = process.env.DB_USERNAME;
