@@ -33,32 +33,32 @@ app.get("/", function (req, res) {
     res.status(201).json({ message: "Welcome to Doc Hub" })
 });
 
-app.get("/Autocomplete",async function(req,res){
-    const Data = req.query.MediName;
-    let Final_data=[]
-    let Medi_data=await Medicine.find({ BrandName1: {$regex:Data, $options: 'i'  }})
-    if(Medi_data!=0){
-        for(var i=0;i<Medi_data.length;i++){
-                Final_data.push(Medi_data[i]["BrandName1"]);
+// app.get("/Autocomplete",async function(req,res){
+//     const Data = req.query.MediName;
+//     let Final_data=[]
+//     let Medi_data=await Medicine.find({ BrandName1: {$regex:Data, $options: 'i'  }})
+//     if(Medi_data!=0){
+//         for(var i=0;i<Medi_data.length;i++){
+//                 Final_data.push(Medi_data[i]["BrandName1"]);
 
-        }
-    }
-    Medi_data=await Medicine.find({ BrandName2: {$regex:Data, $options: 'i'  }})
-    if(Medi_data!=0){
-        for(var i=0;i<Medi_data.length;i++){
-                Final_data.push(Medi_data[i]["BrandName2"]);
-        }
-    }
-    Medi_data=await Medicine.find({ BrandName3: {$regex:Data, $options: 'i'  }})
-    if(Medi_data!=0){
-        for(var i=0;i<Medi_data.length;i++){
-                Final_data.push(Medi_data[i]["BrandName3"]);
+//         }
+//     }
+//     Medi_data=await Medicine.find({ BrandName2: {$regex:Data, $options: 'i'  }})
+//     if(Medi_data!=0){
+//         for(var i=0;i<Medi_data.length;i++){
+//                 Final_data.push(Medi_data[i]["BrandName2"]);
+//         }
+//     }
+//     Medi_data=await Medicine.find({ BrandName3: {$regex:Data, $options: 'i'  }})
+//     if(Medi_data!=0){
+//         for(var i=0;i<Medi_data.length;i++){
+//                 Final_data.push(Medi_data[i]["BrandName3"]);
 
-        }
-    }
+//         }
+//     }
     
-    res.send(Final_data);
-})
+//     res.send(Final_data);
+// })
 
 app.get("/Get_Medicine", async function (req, res) {
     const Data = req.query.MediName;
