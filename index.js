@@ -19,8 +19,18 @@ const db_username = process.env.DB_USERNAME;
 const db_password = process.env.DB_PASSWORD;
 const db_name = process.env.DB_NAME;
 
-const url = `mongodb+srv://${db_username}:${db_password}@todolist.izk0v8w.mongodb.net/${db_name}?retryWrites=true&w=majority`;
-mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+const connectDB = async () => {
+    try {
+    const url = `mongodb+srv://${db_username}:${db_password}@todolist.izk0v8w.mongodb.net/${db_name}?retryWrites=true&w=majority`;
+    const conn = await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
+      console.log(`MongoDB Connected: ${conn.connection.host}`);
+    } catch (error) {
+      console.log(error);
+      process.exit(1);
+    }
+  }
+
+
 const shop_data = JSON.parse(fs.readFileSync("./Data/Shop.json", { encoding: "utf-8" }));
 
 const db = mongoose.connection;
@@ -30,7 +40,7 @@ db.once('open', async function () {
 });
 
 app.get("/", function (req, res) {
-    res.status(201).json({ message: "Welcome to Doc Hub" })
+    res.status(201).json({ message: "Welcome to DocHub" })
 });
 
 // app.get("/Autocomplete",async function(req,res){
@@ -108,4 +118,8 @@ app.get("*", function (request, response) {
     response.status(404).json({ message: "Page not Found" })
 })
 
-app.listen(Port, () => { console.log(`Server is running at ${Port}....`) });
+
+connectDB().then(() => {
+    app.listen(Port, () => { console.log(`Server is running at ${Port}....`) });
+
+})
