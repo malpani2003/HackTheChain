@@ -39,29 +39,38 @@ app.get("/", function (req, res) {
 
 app.get("/Autocomplete",async function(req,res){
     const Data = req.query.MediName;
-    let Final_data=[]
-    let Medi_data=await Medicine.find({ BrandName1: {$regex:Data, $options: 'i'  }})
-    if(Medi_data!=0){
-        for(var i=0;i<Medi_data.length;i++){
+    let Final_data=[];
+    Medicine.find({ BrandName1: {$regex:Data, $options: 'i'  }})
+    .then((Medi_data) => {
+        if(Medi_data.length !== 0){
+            for(var i=0;i<Medi_data.length;i++){
                 Final_data.push(Medi_data[i]["BrandName1"]);
-
+            }
         }
-    }
-    Medi_data=await Medicine.find({ BrandName2: {$regex:Data, $options: 'i'  }})
-    if(Medi_data!=0){
-        for(var i=0;i<Medi_data.length;i++){
+        return Medicine.find({ BrandName2: {$regex:Data, $options: 'i'  }})
+    })
+    .then((Medi_data) => {
+        if(Medi_data.length !== 0){
+            for(var i=0;i<Medi_data.length;i++){
                 Final_data.push(Medi_data[i]["BrandName2"]);
+            }
         }
-    }
-    Medi_data=await Medicine.find({ BrandName3: {$regex:Data, $options: 'i'  }})
-    if(Medi_data!=0){
-        for(var i=0;i<Medi_data.length;i++){
+        return Medicine.find({ BrandName3: {$regex:Data, $options: 'i'  }})
+    })
+    .then((Medi_data) => {
+        if(Medi_data.length !== 0){
+            for(var i=0;i<Medi_data.length;i++){
                 Final_data.push(Medi_data[i]["BrandName3"]);
-
+            }
         }
-    }
-    
-    res.send(Final_data);
+        // Do something with Final_data here
+        res.status(201).send(Final_data);
+    })
+    .catch((error) => {
+        // Handle errors here
+        res.status(500).json({ message: "Internal server error" });
+    });
+
 })
 
 app.get("/Get_Medicine", async function (req, res) {
@@ -104,7 +113,7 @@ app.get("/Get_Medicine", async function (req, res) {
             }
         })
         .catch((err) => {
-            return res.status(500).json({ message: "Internal server error" });
+            res.status(500).json({ message: "Internal server error" });
         });
 })
 
