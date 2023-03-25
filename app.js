@@ -33,7 +33,7 @@ app.get("/", function (req, res) {
 });
 
 app.get("/Autocomplete",async function(req,res){
-    const Data = req.body.MediName;
+    const Data = req.query.MediName;
     let Final_data=[]
     let Medi_data=await Medicine.find({ BrandName1: {$regex:Data, $options: 'i'  }})
     if(Medi_data!=0){
@@ -60,7 +60,7 @@ app.get("/Autocomplete",async function(req,res){
 })
 
 app.get("/Get_Medicine", async function (req, res) {
-    const Data = req.body.MediName;
+    const Data = req.query.MediName;
     Medicine.findOne({ $or: [{ BrandName1: Data }, { BrandName2: Data }, { BrandName3: Data }, { GenericName: Data }] })
         .then(async (answer) => {
             if (answer == null) {
