@@ -24,13 +24,13 @@ const connectDB = async () => {
     const url = `mongodb+srv://${db_username}:${db_password}@todolist.izk0v8w.mongodb.net/${db_name}?retryWrites=true&w=majority`;
     const conn = await mongoose.connect(url, { useNewUrlParser: true, useUnifiedTopology: true });
       console.log(`MongoDB Connected`);
-      const shop_data = JSON.parse(fs.readFileSync("./Data/Shop.json", { encoding: "utf-8" }));
     } catch (error) {
-      console.log(error);
-      process.exit(1);
+        console.log(error);
+        process.exit(1);
     }
-  }
+}
 
+const shop_data = JSON.parse(fs.readFileSync("./Data/Shop.json", { encoding: "utf-8" }));
 
 
 app.get("/", function (req, res) {
