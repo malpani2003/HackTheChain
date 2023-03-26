@@ -1,6 +1,10 @@
 HackTheChain
 
-# Doc Hub
+# Statement of HackTheChain 
+ * To find the generic medicine and their location (currently jaipur) and their availability at different Jan Aushadhi Kendra
+ * To find other brand alternative and its price 
+
+# MedHub 
 This API allows users to search for medicines and get the generic medicine for it , including the available medical shops ( Currently Jaipur) and their respective quantities.
 
 # Technologies Used
@@ -33,4 +37,8 @@ This API allows users to search for medicines and get the generic medicine for i
    - Searches for the given medicine name and returns the generic medicine for it , including the available medical shops ( Currently Jaipur) and their respective quantities.
    - Query Parameters 
             MediName: (required) The medicine name for which generic name want
-   For Example -: https://confused-clam-houndstooth.cyclic.app/Get_Medicines?MediName=Cipro
+   For Example -: https://confused-clam-houndstooth.cyclic.app/Get_Medicine?MediName=Cipro
+
+
+
+ `* Some of Data Has been used for Test Purpose only ( We do not own this data)*` 
