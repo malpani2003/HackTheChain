@@ -1,6 +1,6 @@
 HackTheChain
 
-# Doc Hub
+# MedHub
 This API allows users to search for medicines and get the generic medicine for it , including the available medical shops ( Currently Jaipur) and their respective quantities.
 
 # Technologies Used
